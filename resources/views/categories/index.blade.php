@@ -14,7 +14,7 @@
                             <li class="list-group-item">
                                 {{ $category->name }}
                                 <a href= "/categories/{{ $category->id }}/delete" class="btn btn-danger float-right btn-sm">Delete</a>
-                                <a href= "/categories/{{ $category->id }}/edit" class="btn btn-info mr-2 float-right btn-sm">Edit</a>
+                                <a href= "{{ route('categories.edit', $category->id) }}" class="btn btn-info mr-2 float-right btn-sm">Edit</a>
                             </li>
                             @endforeach
                         </ul>

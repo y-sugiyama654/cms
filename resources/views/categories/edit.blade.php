@@ -21,8 +21,9 @@
                             </div>
                         @endif
 
-                        <form action="/categories/{{ $category->id }}/update" method="POST">
+                        <form action="{{ route('categories.update', $category->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Name" name="name" value="{{ $category->name }}">
                             </div>

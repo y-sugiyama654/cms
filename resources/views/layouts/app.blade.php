@@ -35,7 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                             <li class="nav-item active">
-                                <a class="nav-link" href="categories/new">Add Category</a>
+                                <a class="nav-link" href="{{ route('categories.create') }}">Add Category</a>
                             </li>
                         @endauth
                     </ul>
