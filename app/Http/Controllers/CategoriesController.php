@@ -33,17 +33,15 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store()
+    public function store(Request $request)
     {
         $this->validate(request(), [
            'name' => 'required'
         ]);
 
-        $data = request()->all();
-
         $category = new Category();
 
-        $category->name = $data['name'];
+        $category->name = $request['name'];
 
         $category->save();
 
