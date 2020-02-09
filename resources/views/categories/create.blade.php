@@ -21,7 +21,7 @@
                             </div>
                         @endif
 
-                        <form action="/categories/store" method="POST">
+                        <form action="{{ route('categories.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Name" name="name">

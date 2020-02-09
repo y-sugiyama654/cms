@@ -20,15 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('categories', 'CategoriesController@index');
-
-    Route::get('categories/new', 'CategoriesController@create');
-    Route::post('categories/store', 'CategoriesController@store');
-
-    Route::get('categories/{category}/edit', 'CategoriesController@edit');
-    Route::post('categories/{category}/update', 'CategoriesController@update');
-
-    Route::get('/categories/{category}/delete', 'CategoriesController@destroy');
+    Route::resource('categories', 'CategoriesController');
 });
 
 

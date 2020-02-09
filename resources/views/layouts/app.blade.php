@@ -35,7 +35,7 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                             <li class="nav-item active">
-                                <a class="nav-link" href="categories/new">Add Category</a>
+                                <a class="nav-link" href="{{ route('categories.create') }}">Add Category</a>
                             </li>
                         @endauth
                     </ul>
@@ -75,10 +75,38 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
-            @yield('content')
+            @auth
+                <div class="container">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <div class="row">
+                        <div class="col-md-4">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="">Posts</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="">Categories</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-8">
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            @else
+                @yield('content')
+            @endauth
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    @yield('scripts')
 </body>
 </html>
