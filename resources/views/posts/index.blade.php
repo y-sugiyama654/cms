@@ -19,7 +19,7 @@
                             <td class="align-middle">
                                 <a href="" class="btn btn-info btn-sm">Edit</a>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
