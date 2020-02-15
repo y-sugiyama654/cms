@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\CreatePostsRequest;
+use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -68,26 +69,43 @@ class PostsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * 投稿の編集ページの表示
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.create')->with('post', $post);
     }
 
     /**
-     * Update the specified resource in storage.
+     * 投稿の編集
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdatePostRequest $request
+     * @param Post $post
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $data = $request->only(['title', 'description', 'published_at', 'content']);
+
+        // 画像が更新されているか確認
+        if ($request->hasFile('image')) {
+            // ストレージに画像を保存
+            $image = $request->image->store('posts');
+
+            // 編集前の画像をストレージから削除
+            Storage::delete($post->image);
+
+            $data['image'] = $image;
+        }
+
+        $post->update($data);
+
+        session()->flash('success', 'Post Updated Successfully.');
+
+        return redirect(route('posts.index'));
     }
 
     /**
