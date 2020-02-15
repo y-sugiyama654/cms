@@ -92,13 +92,35 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        $post->delete();
+        // forceDelete時にモデルバインディングが使用できないので、DBからidに該当するpostを検索する
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+
+        if ($post->trashed())
+        {
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
 
         session()->flash('success', 'Post deleted successfully');
 
         return redirect(route('posts.index'));
+    }
+
+    /**
+     * 削除した投稿の一覧
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function trashed()
+    {
+        $trashed = Post::onlyTrashed()->get();
+
+        return view('posts.index')->with('posts', $trashed);
     }
 }
 

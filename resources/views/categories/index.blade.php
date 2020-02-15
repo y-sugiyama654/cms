@@ -8,19 +8,20 @@
                     <div class="card-header">Category List</div>
 
                     <div class="card-body">
-
-                        <ul class="list-group">
-                            @foreach ($categories as $category)
-                            <li class="list-group-item">
-                                {{ $category->name }}
-                                <a onclick="handleDelete({{ $category->id }})" class="btn btn-danger float-right btn-sm" style="color: white">Delete</a>
-                                <a href= "{{ route('categories.edit', $category->id) }}" class="btn btn-info mr-2 float-right btn-sm" style="color: white" >Edit</a>
-                            </li>
-                            @endforeach
-                        </ul>
-
+                        @if($categories->count() > 0)
+                            <ul class="list-group">
+                                @foreach ($categories as $category)
+                                    <li class="list-group-item">
+                                        {{ $category->name }}
+                                        <a onclick="handleDelete({{ $category->id }})" class="btn btn-danger float-right btn-sm" style="color: white">Delete</a>
+                                        <a href= "{{ route('categories.edit', $category->id) }}" class="btn btn-info mr-2 float-right btn-sm" style="color: white" >Edit</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <h3 class="text-center">No Category Yet.</h3>
+                        @endif
                     </div>
-
                     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <form action="" method="POST" id="deleteCategoryForm">
@@ -44,7 +45,6 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
