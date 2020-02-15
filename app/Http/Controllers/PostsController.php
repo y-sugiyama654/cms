@@ -109,12 +109,12 @@ class PostsController extends Controller
     /**
      * 投稿の削除
      *
-     * @param  int  $id 投稿記事ID
-     * @return \Illuminate\Http\Response
+     * @param int $id 投稿記事ID
+     * @return void
      */
     public function destroy($id)
     {
-        // forceDelete時にモデルバインディングが使用できないので、DBからidに該当するpostを検索する
+        // forceDelete時にモデルバインディングが使用できないので、DBからidに該当する投稿を取得する
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
         if ($post->trashed())
@@ -134,15 +134,30 @@ class PostsController extends Controller
     /**
      * 削除した投稿の一覧
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function trashed()
     {
         $trashed = Post::onlyTrashed()->get();
 
         return view('posts.index')->with('posts', $trashed);
+    }
+
+    /**
+     * 削除した投稿の復元
+     *
+     * @param int $id 投稿記事ID
+     * @return void
+     */
+    public function restore($id)
+    {
+        // restore時にモデルバインディングが使用できないので、DBからidに該当する投稿を取得する
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        $post->restore();
+
+        session()->flash('success', 'Post restored successfully');
+
+        return redirect()->back();
     }
 }
 
