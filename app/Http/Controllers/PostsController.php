@@ -6,7 +6,6 @@ use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -95,8 +94,7 @@ class PostsController extends Controller
             // ストレージに画像を保存
             $image = $request->image->store('posts');
 
-            // 編集前の画像をストレージから削除
-            Storage::delete($post->image);
+            $post->deleteImage();
 
             $data['image'] = $image;
         }
@@ -121,7 +119,8 @@ class PostsController extends Controller
 
         if ($post->trashed())
         {
-            Storage::delete($post->image);
+            $post->deleteImage();
+
             $post->forceDelete();
         } else {
             $post->delete();
