@@ -40,12 +40,15 @@ class PostsController extends Controller
         // ストレージに画像を保存
         $image = $request->image->store('posts');
 
+        $content = $request['content'];
+
         // postをDBに保存
         Post::create([
-           'title' => $request->title,
-           'description' => $request->description,
-           'content' => $request->content,
-           'image' => $image,
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $content,
+            'image' => $image,
+            'published_at' => $request->published_at,
         ]);
 
         session()->flash('success', 'Post created successfully');
