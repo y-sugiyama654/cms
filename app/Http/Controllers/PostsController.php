@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -87,9 +88,9 @@ class PostsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 投稿の削除
      *
-     * @param  int  $id
+     * @param  int  $id 投稿記事ID
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -99,6 +100,7 @@ class PostsController extends Controller
 
         if ($post->trashed())
         {
+            Storage::delete($post->image);
             $post->forceDelete();
         } else {
             $post->delete();
