@@ -6,7 +6,6 @@ use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -95,8 +94,7 @@ class PostsController extends Controller
             // ストレージに画像を保存
             $image = $request->image->store('posts');
 
-            // 編集前の画像をストレージから削除
-            Storage::delete($post->image);
+            $post->deleteImage();
 
             $data['image'] = $image;
         }
@@ -111,17 +109,18 @@ class PostsController extends Controller
     /**
      * 投稿の削除
      *
-     * @param  int  $id 投稿記事ID
-     * @return \Illuminate\Http\Response
+     * @param int $id 投稿記事ID
+     * @return void
      */
     public function destroy($id)
     {
-        // forceDelete時にモデルバインディングが使用できないので、DBからidに該当するpostを検索する
+        // forceDelete時にモデルバインディングが使用できないので、DBからidに該当する投稿を取得する
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
         if ($post->trashed())
         {
-            Storage::delete($post->image);
+            $post->deleteImage();
+
             $post->forceDelete();
         } else {
             $post->delete();
@@ -135,15 +134,30 @@ class PostsController extends Controller
     /**
      * 削除した投稿の一覧
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function trashed()
     {
         $trashed = Post::onlyTrashed()->get();
 
         return view('posts.index')->with('posts', $trashed);
+    }
+
+    /**
+     * 削除した投稿の復元
+     *
+     * @param int $id 投稿記事ID
+     * @return void
+     */
+    public function restore($id)
+    {
+        // restore時にモデルバインディングが使用できないので、DBからidに該当する投稿を取得する
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+        $post->restore();
+
+        session()->flash('success', 'Post restored successfully');
+
+        return redirect()->back();
     }
 }
 
