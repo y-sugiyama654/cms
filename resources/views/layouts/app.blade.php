@@ -89,6 +89,11 @@
                             {{ session('success') }}
                         </div>
                     @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-4">
                             <ul class="list-group">
