@@ -42,4 +42,15 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    /**
+     * 投稿に紐づくタグが含まれているか確認
+     *
+     * @param int $tagId タグID
+     * @return bool
+     */
+    public function hasTag($tagId)
+    {
+        return in_array($tagId, $this->tags->pluck('id')->toArray());
+    }
 }

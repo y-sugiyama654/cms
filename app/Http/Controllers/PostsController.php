@@ -111,6 +111,10 @@ class PostsController extends Controller
             $data['image'] = $image;
         }
 
+        if ($request->tags) {
+            $post->tags()->sync($request->tags);
+        }
+
         $post->update($data);
 
         session()->flash('success', 'Post Updated Successfully.');
