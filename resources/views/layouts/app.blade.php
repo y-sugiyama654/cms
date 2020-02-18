@@ -38,10 +38,13 @@
                     <ul class="navbar-nav mr-auto">
                         @auth
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ route('categories.create') }}">Add Category</a>
+                                <a class="nav-link" href="{{ route('posts.create') }}">Add Post</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{ route('posts.create') }}">Add Post</a>
+                                <a class="nav-link" href="{{ route('tags.create') }}">Add Tag</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ route('categories.create') }}">Add Category</a>
                             </li>
                         @endauth
                     </ul>
@@ -99,6 +102,9 @@
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     <a href="{{ route('posts.index') }}">Posts</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('tags.index') }}">Tags</a>
                                 </li>
                                 <li class="list-group-item">
                                     <a href="{{ route('categories.index') }}">Categories</a>
