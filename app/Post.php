@@ -32,4 +32,14 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * 投稿に紐づくタグを取得
+     *
+     * @return void
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }
