@@ -99,7 +99,7 @@ class PostsController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        $data = $request->only(['title', 'description', 'published_at', 'content']);
+        $data = $request->only(['title', 'description', 'published_at', 'content', 'category']);
 
         // 画像が更新されているか確認
         if ($request->hasFile('image')) {
@@ -114,6 +114,8 @@ class PostsController extends Controller
         if ($request->tags) {
             $post->tags()->sync($request->tags);
         }
+
+        $post->category_id = $data['category'];
 
         $post->update($data);
 
