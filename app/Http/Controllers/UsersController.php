@@ -16,4 +16,21 @@ class UsersController extends Controller
     {
         return view('users.index')->with('users', User::all());
     }
+
+    /**
+     * writeユーザーにadmin権限を付与
+     *
+     * @param User $user
+     * @return void
+     */
+    public function makeAdmin(User $user)
+    {
+        $user->role = 'admin';
+
+        $user->save();
+
+        session()->flash('success', 'User made admin successfully');
+
+        return redirect(route('users.index'));
+    }
 }
