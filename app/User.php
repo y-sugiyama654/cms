@@ -46,4 +46,12 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    /**
+     * ユーザーに紐づく投稿を取得
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
