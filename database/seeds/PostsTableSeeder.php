@@ -4,6 +4,7 @@ use App\Category;
 use App\Post;
 use App\Tag;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class PostsTableSeeder extends Seeder
 {
@@ -14,6 +15,18 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
+        $auther1 = App\User::create([
+            'name' => 'Yuta',
+            'email' => 'yuta@gmail.com',
+            'password' => Hash::make('password')
+        ]);
+
+        $auther2 = App\User::create([
+            'name' => 'pomu',
+            'email' => 'pomu@gmail.com',
+            'password' => Hash::make('password')
+        ]);
+
         $category1 = Category::create([
             'name' => 'PHP'
         ]);
@@ -30,7 +43,7 @@ class PostsTableSeeder extends Seeder
             'name' => 'JavaScript'
         ]);
 
-        $post1 = Post::create([
+        $post1 = $auther1->posts()->create([
             'title' => 'We relocated our office to a new designed garage',
             'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
             'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
@@ -38,7 +51,7 @@ class PostsTableSeeder extends Seeder
             'image' => 'posts/1.jpg',
         ]);
 
-        $post2 = Post::create([
+        $post2 = $auther1->posts()->create([
             'title' => 'We relocated our office to a new designed garage',
             'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
             'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
@@ -46,7 +59,7 @@ class PostsTableSeeder extends Seeder
             'image' => 'posts/2.jpg',
         ]);
 
-        $post3 = Post::create([
+        $post3 = $auther2->posts()->create([
             'title' => 'We relocated our office to a new designed garage',
             'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
             'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
@@ -54,7 +67,7 @@ class PostsTableSeeder extends Seeder
             'image' => 'posts/3.jpg',
         ]);
 
-        $post4 = Post::create([
+        $post4 = $auther2->posts()->create([
             'title' => 'We relocated our office to a new designed garage',
             'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',
             'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ',

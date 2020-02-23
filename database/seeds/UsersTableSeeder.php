@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         if (!$user) {
             User::create([
                 'name' => 'Yuta',
-                'email' => 'yuta@laravel.com',
+                'email' => 'yuta@admin.com',
                 'role' => 'admin',
                 'password' => Hash::make('password'),
             ]);

@@ -11,7 +11,7 @@ class Post extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title', 'description', 'content', 'image', 'published_at', 'category_id'
+        'title', 'description', 'content', 'image', 'published_at', 'category_id', 'user_id',
     ];
 
     /**
@@ -53,5 +53,15 @@ class Post extends Model
     public function hasTag($tagId)
     {
         return in_array($tagId, $this->tags->pluck('id')->toArray());
+    }
+
+    /**
+     * 投稿に紐づくユーザーを取得
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

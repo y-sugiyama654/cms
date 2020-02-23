@@ -11,13 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\Blog\PostsController;
+
+Route::get('/', 'WelcomeController@index')->name('blog.index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('blog/posts/{post}', [PostsController::class, 'show'])->name('blog.show');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('categories', 'CategoriesController');
