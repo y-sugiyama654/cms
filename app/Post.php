@@ -64,4 +64,21 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * 検索条件が含まれている場合に検索結果を返す
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeSearched($query)
+    {
+        $search = request()->query('search');
+
+        if (!$search) {
+            return $query;
+        }
+
+        return $query->where('title', 'LIKE', "%{$search}%");
+    }
 }
