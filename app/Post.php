@@ -10,6 +10,10 @@ class Post extends Model
 {
     use SoftDeletes;
 
+    protected $dates = [
+        'published_at'
+    ];
+
     protected $fillable = [
         'title', 'description', 'content', 'image', 'published_at', 'category_id', 'user_id',
     ];
@@ -66,6 +70,17 @@ class Post extends Model
     }
 
     /**
+     * 現在の日時と比較して過去の投稿を返す
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<=', now());
+    }
+
+    /**
      * 検索条件が含まれている場合に検索結果を返す
      *
      * @param $query
@@ -76,9 +91,9 @@ class Post extends Model
         $search = request()->query('search');
 
         if (!$search) {
-            return $query;
+            return $query->published();
         }
 
-        return $query->where('title', 'LIKE', "%{$search}%");
+        return $query->published()->where('title', 'LIKE', "%{$search}%");
     }
 }
