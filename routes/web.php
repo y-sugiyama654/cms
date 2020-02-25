@@ -14,11 +14,13 @@
 use App\Http\Controllers\Blog\PostsController;
 
 Route::get('/', 'WelcomeController@index')->name('blog.index');
+Route::get('blog/posts/{post}', [PostsController::class, 'show'])->name('blog.show');
+Route::get('blog/categories/{category}', [PostsController::class, 'category'])->name('blog.category');
+Route::get('blog/tags/{tag}', [PostsController::class, 'tag'])->name('blog.tag');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('blog/posts/{post}', [PostsController::class, 'show'])->name('blog.show');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('categories', 'CategoriesController');
