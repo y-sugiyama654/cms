@@ -1,4 +1,5 @@
-* 内容
+## 概要
+* 開発内容
 ## 注意事項
 * doctrineの制約上エラーになるため、service_typeテーブルはjoinしない
 ## TODO
