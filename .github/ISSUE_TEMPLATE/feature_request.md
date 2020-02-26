@@ -1,6 +1,6 @@
 ---
 name: 要望のテンプレート
-about: 要望のテンプレート
+about: 新規機能追加や既存機能修正用のissueテンプレート
 title: ''
 labels: ''
 assignees: ''
